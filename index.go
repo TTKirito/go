@@ -16,3 +16,5 @@ func main() {
 // insall go vscode
 
 // docker
+
+// create diagram : https://dbdiagram.io/d/bank-go-657c2dd356d8064ca017dc32
