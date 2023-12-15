@@ -28,3 +28,18 @@ func main() {
 //cli migarate: migrate create -ext sql -dir db/migration -seq init_schema
 
 // run file in make: make migrateup
+
+// step make schema sqlc
+
+// create query file > account.sql
+
+// INSERT INTO accounts (
+//     owner,
+//     balance,
+//     currency
+// ) values (
+//     $1, $2, $3
+// ) RETURNING *;
+// make sqlc
+
+// fix: go outside: go work init
