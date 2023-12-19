@@ -30,6 +30,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: 439297521866.dkr.ecr.eu-west-1.amazonaws.com/testbank
         IMAGE_TAG: ${{ github.sha }}
+        AWS_REGION: eu-west-1
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
