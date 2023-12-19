@@ -1,6 +1,6 @@
 
 
-name: ci-test
+name: ci-deploy
 
 on: 
   push:
