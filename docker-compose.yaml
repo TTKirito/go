@@ -6,6 +6,10 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
   api:
     build: 
       context: .
