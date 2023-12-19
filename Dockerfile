@@ -1,11 +1,7 @@
 #Build stage
-FROM golang:1.21.5 as builder
+FROM golang:alpine as builder
 WORKDIR /app
 COPY . .
-# Effectively tracks changes within your go.mod file
-COPY go.mod .
- 
-RUN go mod download
 
 RUN go build -o main main.go
 
@@ -13,6 +9,7 @@ RUN go build -o main main.go
 FROM alpine
 WORKDIR /app
 COPY --from=builder /app/main .
+COPY app.env .
 
 EXPOSE 8080
 CMD ["/app/main"]
