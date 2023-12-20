@@ -5,17 +5,17 @@ create db:
 dropdb:
 	docker exec -it postgres_container dropdb postgres
 migrateup: 
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/postgres?sslmode=disable" --verbose up
+	migrate -path db/migration -database "postgresql://root:BNId6ZUJwCOlf52KTBxj@postgres.cruk82i6s2dx.eu-west-1.rds.amazonaws.com:5432/postgres?sslmode=disable" --verbose up
 
 
 migrateup1: 
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/postgres?sslmode=disable" --verbose up 1
+	migrate -path db/migration -database "postgresql://root:BNId6ZUJwCOlf52KTBxj@postgres.cruk82i6s2dx.eu-west-1.rds.amazonaws.com:5432/postgres?sslmode=disable" --verbose up 1
 
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/postgres?sslmode=disable" --verbose down
+	migrate -path db/migration -database "postgresql://root:BNId6ZUJwCOlf52KTBxj@postgres.cruk82i6s2dx.eu-west-1.rds.amazonaws.com:5432/postgres?sslmode=disable" --verbose down
 
 migratedown1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/postgres?sslmode=disable" --verbose down 1
+	migrate -path db/migration -database "postgresql://root:BNId6ZUJwCOlf52KTBxj@postgres.cruk82i6s2dx.eu-west-1.rds.amazonaws.com:5432/postgres?sslmode=disable" --verbose down 1
 
 sqlc: 
 	sqlc generate
