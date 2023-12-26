@@ -157,3 +157,6 @@ func runGinServer(config util.Config, store db.Store) {
 
 // log
 //go get "github.com/rs/zerolog/log"
+
+// redis queue
+//go get -u github.com/hibiken/asynq
