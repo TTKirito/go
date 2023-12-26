@@ -125,6 +125,21 @@ func (mr *MockStoreMockRecorder) CreateUser(arg0, arg1 interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockStore)(nil).CreateUser), arg0, arg1)
 }
 
+// Createuser mocks base method
+func (m *MockStore) Createuser(arg0 context.Context, arg1 sqlc.CreateUserTxParams) (sqlc.CreateUserTxResult, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Createuser", arg0, arg1)
+	ret0, _ := ret[0].(sqlc.CreateUserTxResult)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Createuser indicates an expected call of Createuser
+func (mr *MockStoreMockRecorder) Createuser(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Createuser", reflect.TypeOf((*MockStore)(nil).Createuser), arg0, arg1)
+}
+
 // DeleteAccount mocks base method
 func (m *MockStore) DeleteAccount(arg0 context.Context, arg1 int64) error {
 	m.ctrl.T.Helper()
