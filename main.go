@@ -179,3 +179,6 @@ func runGinServer(config util.Config, store db.Store) {
 
 // redis queue
 //go get -u github.com/hibiken/asynq
+
+// email
+// go get github.com/jordan-wright/email
