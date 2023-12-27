@@ -41,6 +41,7 @@ type Querier interface {
 	//     username = @username
 	// RETURNING *;
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
+	UpdateVerifyEmail(ctx context.Context, arg UpdateVerifyEmailParams) (VerifyEmail, error)
 }
 
 var _ Querier = (*Queries)(nil)
