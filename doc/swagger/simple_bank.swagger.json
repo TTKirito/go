@@ -10,6 +10,9 @@
   "tags": [
     {
       "name": "SimpleBank"
+    },
+    {
+      "name": "BlogService"
     }
   ],
   "consumes": [
@@ -162,6 +165,31 @@
     }
   },
   "definitions": {
+    "pbBlog": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "authorId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "pbCreateBlogResponse": {
+      "type": "object",
+      "properties": {
+        "blog": {
+          "$ref": "#/definitions/pbBlog"
+        }
+      }
+    },
     "pbCreateUserRequest": {
       "type": "object",
       "properties": {
