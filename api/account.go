@@ -1,15 +1,12 @@
 package api
 
 import (
-	"database/sql"
 	"errors"
-	"log"
 	"net/http"
 
 	db "github.com/TTKirito/go/db/sqlc"
 	"github.com/TTKirito/go/token"
 	"github.com/gin-gonic/gin"
-	"github.com/lib/pq"
 )
 
 type createAccountRequest struct {
@@ -32,14 +29,10 @@ func (server *Server) createAccount(ctx *gin.Context) {
 
 	account, err := server.store.CreateAccount(ctx, arg)
 	if err != nil {
-		if pgErr, ok := err.(*pq.Error); ok {
-			log.Println(pgErr.Code.Name())
-			switch pgErr.Code.Name() {
-			case "foreign_key_violation", "unique_violation":
-				ctx.JSON(http.StatusForbidden, errorResponse(err))
-				return
-			}
-
+		errCode := db.ErrorCode(err)
+		if errCode == db.ForeignKeyViolation || errCode == db.UniqueViolation {
+			ctx.JSON(http.StatusForbidden, errorResponse(err))
+			return
 		}
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -61,7 +54,7 @@ func (server *Server) getAccount(ctx *gin.Context) {
 
 	account, err := server.store.GetAccount(ctx, req.ID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, db.ErrRecordNotFound) {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
 			return
 		}
@@ -101,7 +94,7 @@ func (server *Server) listAccount(ctx *gin.Context) {
 
 	accounts, err := server.store.ListAccounts(ctx, arg)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if err == db.ErrRecordNotFound {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
 			return
 		}

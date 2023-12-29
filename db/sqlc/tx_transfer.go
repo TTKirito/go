@@ -2,8 +2,9 @@ package db
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 // TransferTxParams contains the input parameters of the transfer transaction
@@ -37,8 +38,8 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 		fmt.Println(txName, "create transfer")
 
 		result.Transfer, err = q.CreateTransfer(ctx, CreateTransferParams{
-			FromAccountID: sql.NullInt64{Int64: arg.FromAccountID, Valid: true},
-			ToAccountID:   sql.NullInt64{Int64: arg.ToAccountID, Valid: true},
+			FromAccountID: pgtype.Int8{Int64: arg.FromAccountID, Valid: true},
+			ToAccountID:   pgtype.Int8{Int64: arg.ToAccountID, Valid: true},
 			Amount:        arg.Amount,
 		})
 
@@ -48,7 +49,7 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 		fmt.Println(txName, "create entry 1")
 
 		result.FromEntry, err = q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: sql.NullInt64{Int64: arg.FromAccountID, Valid: true},
+			AccountID: pgtype.Int8{Int64: arg.FromAccountID, Valid: true},
 			Amount:    -arg.Amount,
 		})
 
@@ -58,7 +59,7 @@ func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (Tr
 		fmt.Println(txName, "create entry 2")
 
 		result.ToEntry, err = q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: sql.NullInt64{Int64: arg.ToAccountID, Valid: true},
+			AccountID: pgtype.Int8{Int64: arg.ToAccountID, Valid: true},
 			Amount:    arg.Amount,
 		})
 

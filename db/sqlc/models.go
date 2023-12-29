@@ -5,10 +5,10 @@
 package db
 
 import (
-	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Account struct {
@@ -20,8 +20,8 @@ type Account struct {
 }
 
 type Entry struct {
-	ID        int64         `json:"id"`
-	AccountID sql.NullInt64 `json:"account_id"`
+	ID        int64       `json:"id"`
+	AccountID pgtype.Int8 `json:"account_id"`
 	// can be nagative
 	Amount    int64     `json:"amount"`
 	CreatedAt time.Time `json:"created_at"`
@@ -39,9 +39,9 @@ type Session struct {
 }
 
 type Transfer struct {
-	ID            int64         `json:"id"`
-	FromAccountID sql.NullInt64 `json:"from_account_id"`
-	ToAccountID   sql.NullInt64 `json:"to_account_id"`
+	ID            int64       `json:"id"`
+	FromAccountID pgtype.Int8 `json:"from_account_id"`
+	ToAccountID   pgtype.Int8 `json:"to_account_id"`
 	// must be positive
 	Amount    int64     `json:"amount"`
 	CreatedAt time.Time `json:"created_at"`

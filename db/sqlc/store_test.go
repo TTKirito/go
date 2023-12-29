@@ -9,8 +9,6 @@ import (
 )
 
 func TestTransferTx(t *testing.T) {
-	store := NewStore(testDB)
-
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
 	fmt.Println(">> before:", account1.Balance, account2.Balance)
@@ -33,7 +31,7 @@ func TestTransferTx(t *testing.T) {
 
 		go func() {
 			ctx := context.WithValue(context.Background(), txKey, txName)
-			_, err := store.TransferTx(ctx, TransferTxParams{
+			_, err := testStore.TransferTx(ctx, TransferTxParams{
 				FromAccountID: fromAccountID,
 				ToAccountID:   toAccountID,
 				Amount:        amount,
@@ -111,10 +109,10 @@ func TestTransferTx(t *testing.T) {
 
 	}
 
-	updateAccount1, err := testQueries.GetAccount(context.Background(), account1.ID)
+	updateAccount1, err := testStore.GetAccount(context.Background(), account1.ID)
 	require.NoError(t, err)
 
-	updateAccount2, err := testQueries.GetAccount(context.Background(), account2.ID)
+	updateAccount2, err := testStore.GetAccount(context.Background(), account2.ID)
 	require.NoError(t, err)
 
 	fmt.Println(">> after:", updateAccount1.Balance, updateAccount2.Balance)
