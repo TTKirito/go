@@ -67,11 +67,18 @@ func (*server) CreateBlog(ctx context.Context, req *pb.CreateBlogRequest) (*pb.C
 }
 
 func (*server) ReadBlog(ctx context.Context, req *pb.ReadBlogRequest) (*pb.ReadBlogResponse, error) {
-	bogId := req.GetBlogId()
+	blogId := req.GetBlogId()
+	fmt.Println("Read blog request::::")
+	oid, err := primitive.ObjectIDFromHex(blogId)
+
+	if err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, fmt.Sprintf("Cannot parse ID "))
+
+	}
 
 	data := &blogItem{}
-	filter := bson.D{{Key: "_id", Value: bogId}}
-
+	filter := bson.D{{Key: "_id", Value: oid}}
+	fmt.Println(oid, filter)
 	res := collection.FindOne(context.Background(), filter)
 
 	if err := res.Decode(data); err != nil {
@@ -79,6 +86,45 @@ func (*server) ReadBlog(ctx context.Context, req *pb.ReadBlogRequest) (*pb.ReadB
 	}
 
 	return &pb.ReadBlogResponse{
+		Blog: &pb.Blog{
+			Id:       data.ID.Hex(),
+			AuthorId: data.AuthorID,
+			Content:  data.Content,
+			Title:    data.Title,
+		},
+	}, nil
+}
+
+func (*server) UpdateBlog(ctx context.Context, req *pb.UpdateBlogRequest) (*pb.UpdateBlogResponse, error) {
+	fmt.Println("Update blog request::::")
+	blog := req.GetBlog()
+
+	oid, err := primitive.ObjectIDFromHex(blog.Id)
+
+	if err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, fmt.Sprintf("Cannot parse ID "))
+
+	}
+
+	data := &blogItem{}
+	filter := bson.D{{Key: "_id", Value: oid}}
+	res := collection.FindOne(context.Background(), filter)
+
+	if err := res.Decode(data); err != nil {
+		return nil, status.Errorf(codes.NotFound, fmt.Sprintf("Cannot find blog with specified ID: %v", err))
+	}
+
+	data.AuthorID = blog.GetAuthorId()
+	data.Content = blog.GetContent()
+	data.Title = blog.GetTitle()
+
+	updateRes, updateErr := collection.ReplaceOne(context.Background(), filter, data)
+
+	if updateErr != nil {
+		return nil, status.Errorf(codes.InvalidArgument, fmt.Sprintf("Cannot update object in MongoDB: %v", updateErr))
+
+	}
+	return &pb.UpdateBlogResponse{
 		Blog: &pb.Blog{
 			Id:       data.ID.Hex(),
 			AuthorId: data.AuthorID,
