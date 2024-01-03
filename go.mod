@@ -11,9 +11,9 @@ require (
 	github.com/hibiken/asynq v0.24.1
 	github.com/jackc/pgx/v5 v5.5.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
-	github.com/lib/pq v1.10.9
 	github.com/o1egl/paseto v1.0.0
 	github.com/rs/zerolog v1.31.0
+	go.mongodb.org/mongo-driver v1.13.1
 	google.golang.org/genproto/googleapis/api v0.0.0-20231106174013-bbf56f31fb17
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231120223509-83a465c0220f
 	google.golang.org/grpc v1.59.0
@@ -33,6 +33,7 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
+	github.com/lib/pq v1.10.9 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect
 	github.com/pkg/errors v0.9.1 // indirect
@@ -42,7 +43,6 @@ require (
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
-	go.mongodb.org/mongo-driver v1.13.1 // indirect
 	golang.org/x/sync v0.5.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/genproto v0.0.0-20231106174013-bbf56f31fb17 // indirect

@@ -52,5 +52,7 @@ redis:
 serverblog:
 	go run streaming/blog_server/server.go
 
+clientblog:
+	go run streaming/blog_client/client.go
 
 .PHONY: postgres createdb dropdb migrateup migratedown migrateup1 new_migration migratedown1 sqlc test server mock proto serverblog redis

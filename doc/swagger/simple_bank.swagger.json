@@ -251,6 +251,14 @@
         }
       }
     },
+    "pbReadBlogResponse": {
+      "type": "object",
+      "properties": {
+        "blog": {
+          "$ref": "#/definitions/pbBlog"
+        }
+      }
+    },
     "pbUpdateUserRequest": {
       "type": "object",
       "properties": {

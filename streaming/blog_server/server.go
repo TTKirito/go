@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/TTKirito/go/pb"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -61,6 +62,28 @@ func (*server) CreateBlog(ctx context.Context, req *pb.CreateBlogRequest) (*pb.C
 			AuthorId: blog.GetAuthorId(),
 			Title:    blog.GetTitle(),
 			Content:  blog.GetContent(),
+		},
+	}, nil
+}
+
+func (*server) ReadBlog(ctx context.Context, req *pb.ReadBlogRequest) (*pb.ReadBlogResponse, error) {
+	bogId := req.GetBlogId()
+
+	data := &blogItem{}
+	filter := bson.D{{Key: "_id", Value: bogId}}
+
+	res := collection.FindOne(context.Background(), filter)
+
+	if err := res.Decode(data); err != nil {
+		return nil, status.Errorf(codes.NotFound, fmt.Sprintf("Cannot find blog with specified ID: %v", err))
+	}
+
+	return &pb.ReadBlogResponse{
+		Blog: &pb.Blog{
+			Id:       data.ID.Hex(),
+			AuthorId: data.AuthorID,
+			Content:  data.Content,
+			Title:    data.Title,
 		},
 	}, nil
 }
