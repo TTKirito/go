@@ -215,6 +215,14 @@
         }
       }
     },
+    "pbDeleteBlogResponse": {
+      "type": "object",
+      "properties": {
+        "blogId": {
+          "type": "string"
+        }
+      }
+    },
     "pbLoginUserRequest": {
       "type": "object",
       "properties": {
