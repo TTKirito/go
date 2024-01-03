@@ -118,20 +118,24 @@ func (*server) UpdateBlog(ctx context.Context, req *pb.UpdateBlogRequest) (*pb.U
 	data.Content = blog.GetContent()
 	data.Title = blog.GetTitle()
 
-	updateRes, updateErr := collection.ReplaceOne(context.Background(), filter, data)
+	_, updateErr := collection.ReplaceOne(context.Background(), filter, data)
 
 	if updateErr != nil {
 		return nil, status.Errorf(codes.InvalidArgument, fmt.Sprintf("Cannot update object in MongoDB: %v", updateErr))
 
 	}
 	return &pb.UpdateBlogResponse{
-		Blog: &pb.Blog{
-			Id:       data.ID.Hex(),
-			AuthorId: data.AuthorID,
-			Content:  data.Content,
-			Title:    data.Title,
-		},
+		Blog: dataToBlogPb(data),
 	}, nil
+}
+
+func dataToBlogPb(data *blogItem) *pb.Blog {
+	return &pb.Blog{
+		Id:       data.ID.Hex(),
+		AuthorId: data.AuthorID,
+		Content:  data.Content,
+		Title:    data.Title,
+	}
 }
 
 func main() {
