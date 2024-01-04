@@ -80,17 +80,16 @@ func (c *simpleBankClient) UpdateUser(ctx context.Context, in *UpdateUserRequest
 }
 
 // SimpleBankServer is the server API for SimpleBank service.
-// All implementations must embed UnimplementedSimpleBankServer
+// All implementations should embed UnimplementedSimpleBankServer
 // for forward compatibility
 type SimpleBankServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
 	VerifyEmail(context.Context, *VerifyEmailRequest) (*VerifyEmailResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
-	mustEmbedUnimplementedSimpleBankServer()
 }
 
-// UnimplementedSimpleBankServer must be embedded to have forward compatible implementations.
+// UnimplementedSimpleBankServer should be embedded to have forward compatible implementations.
 type UnimplementedSimpleBankServer struct {
 }
 
@@ -106,7 +105,6 @@ func (UnimplementedSimpleBankServer) VerifyEmail(context.Context, *VerifyEmailRe
 func (UnimplementedSimpleBankServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
-func (UnimplementedSimpleBankServer) mustEmbedUnimplementedSimpleBankServer() {}
 
 // UnsafeSimpleBankServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to SimpleBankServer will
