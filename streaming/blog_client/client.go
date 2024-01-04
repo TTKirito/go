@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 
 	"github.com/TTKirito/go/pb"
@@ -68,4 +69,22 @@ func main() {
 
 	fmt.Printf("blog was delete %v", deleteRes)
 
+	stream, err := c.ListBlog(context.Background(), &pb.ListBlogRequest{})
+
+	if err != nil {
+		log.Fatalf("error while calling Listblog RPC: %v", err)
+	}
+
+	for {
+		res, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+
+		if err != nil {
+			log.Fatalf("Something happened: %v", err)
+		}
+
+		fmt.Println(res.GetBlog())
+	}
 }

@@ -158,7 +158,7 @@ func (*server) DeleteBlog(ctx context.Context, req *pb.DeleteBlogRequest) (*pb.D
 func (*server) ListBlog(req *pb.ListBlogRequest, stream pb.BlogService_ListBlogServer) error {
 	fmt.Println("List blog request::::")
 
-	res, err := collection.Find(context.Background(), nil)
+	res, err := collection.Find(context.Background(), bson.D{})
 
 	if err != nil {
 		return status.Errorf(codes.NotFound, fmt.Sprintf("Unknown internal error: %v", err))
